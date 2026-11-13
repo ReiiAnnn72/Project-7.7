@@ -1,15 +1,40 @@
 
 /* =================================
-   PROJECT 7.7 - MAIN STYLESHEET
+   PROJECT 7.7 - DUAL THEME SYSTEM
 ================================= */
 
-:root {
+/* THEME VARIABLES */
+
+:root,
+[data-theme="dark"] {
+    color-scheme: dark;
+
     --background: #080f1d;
     --surface: #111d30;
+    --surface-soft: #1c2d46;
     --primary: #3987ff;
     --text: #f1f5fb;
     --muted: #a4b2c7;
+    --border: #293b55;
+    --nav: #0c1728;
+    --hero-start: #101f38;
 }
+
+[data-theme="light"] {
+    color-scheme: light;
+
+    --background: #f1f6ff;
+    --surface: #ffffff;
+    --surface-soft: #e3eeff;
+    --primary: #477fc5;
+    --text: #263b59;
+    --muted: #71839e;
+    --border: #d6e3f5;
+    --nav: #ffffff;
+    --hero-start: #e5efff;
+}
+
+/* RESET */
 
 * {
     margin: 0;
@@ -26,6 +51,7 @@ body {
     background: var(--background);
     color: var(--text);
     line-height: 1.7;
+    transition: background 0.3s, color 0.3s;
 }
 
 .container {
@@ -40,6 +66,7 @@ header {
     padding: 35px 0;
     background: var(--surface);
     text-align: center;
+    border-bottom: 1px solid var(--border);
 }
 
 header h1 {
@@ -55,23 +82,50 @@ header p {
 /* NAVIGATION */
 
 nav {
-    background: #0c1728;
+    background: var(--nav);
     padding: 15px 0;
-    text-align: center;
     position: sticky;
     top: 0;
     z-index: 10;
+    border-bottom: 1px solid var(--border);
+}
+
+nav .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px 24px;
 }
 
 nav a {
     color: var(--text);
     text-decoration: none;
-    margin: 0 12px;
+    padding: 6px 4px;
     font-size: 0.95rem;
+    transition: color 0.2s;
 }
 
 nav a:hover {
     color: var(--primary);
+}
+
+/* THEME BUTTON */
+
+.theme-toggle {
+    background: var(--surface-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 9px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.theme-toggle:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
 }
 
 /* HERO */
@@ -79,8 +133,11 @@ nav a:hover {
 .hero {
     padding: 100px 0;
     text-align: center;
-    background:
-        linear-gradient(135deg, #101f38, #080f1d);
+    background: linear-gradient(
+        135deg,
+        var(--hero-start),
+        var(--background)
+    );
 }
 
 .hero h2 {
@@ -99,15 +156,15 @@ nav a:hover {
 .button {
     display: inline-block;
     background: var(--primary);
-    color: white;
+    color: #ffffff;
     padding: 12px 25px;
-    border-radius: 6px;
+    border-radius: 8px;
     text-decoration: none;
     transition: 0.3s;
 }
 
 .button:hover {
-    background: #2168d8;
+    opacity: 0.85;
     transform: translateY(-2px);
 }
 
@@ -122,44 +179,27 @@ nav a:hover {
     margin-bottom: 20px;
 }
 
-.section p {
+.section p,
+.section ul {
     color: var(--muted);
 }
 
 .section ul {
     padding-left: 25px;
-    color: var(--muted);
 }
 
 /* FOOTER */
 
 footer {
     background: var(--surface);
+    border-top: 1px solid var(--border);
     text-align: center;
     padding: 30px 0;
     color: var(--muted);
     font-size: 0.9rem;
 }
 
-
-/* =================================
-   RESPONSIVE NAVIGATION
-================================= */
-
-nav .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 10px 24px;
-}
-
-nav a {
-    margin: 0;
-    padding: 6px 4px;
-}
-
-/* MOBILE */
+/* MOBILE RESPONSIVE */
 
 @media (max-width: 480px) {
     nav .container {
@@ -172,6 +212,15 @@ nav a {
         display: block;
         text-align: center;
         padding: 8px 4px;
+    }
+
+    .theme-toggle {
+        grid-column: 1 / -1;
+        justify-self: center;
+    }
+
+    .hero {
+        padding: 75px 0;
     }
 }
 
